@@ -35,7 +35,7 @@ h1 {
     float: left;
 }
 
-.restart {
+.reload {
 	display: inline-block;
 	cursor: pointer;
 }
