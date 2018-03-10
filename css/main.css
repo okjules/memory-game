@@ -4,7 +4,10 @@
 	box-sizing: border-box;
 }
 
-/*Score Content*/
+h1 {
+	text-align: center;
+	margin-bottom: 10px;
+}
 
 .main-container {
 	max-width: 50%;
@@ -12,9 +15,10 @@
 	background-color: pink;
 }
 
-h1 {
-	text-align: center;
-	background-color: pink;
+/*Score Content*/
+
+.score-tracker {
+	margin-bottom: -20px;
 }
 
 .stars {
@@ -33,29 +37,48 @@ h1 {
 
 .restart {
 	display: inline-block;
+	cursor: pointer;
 }
 
 /*Card-Grid*/
 
-.card-grid {
-	min-height: 650px;
+.grid {
 	display: flex;
-	flex-flow: row wrap;
-	justify-content: space-around;
+	flex-wrap: wrap;
+	justify-content: space-between;
 	align-items: center;
-	background-color: green;
-	list-style-type: none;
+	min-height: 700px;
+  padding: 32px;
+  border-radius: 10px;
 	margin: 0;
-	padding: 0;
 }
 
-.card {
+.grid .card {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	cursor: pointer;
 	width: 22%;
 	height: 150px;
+	background: blue;
+	font-size: 0;
+	color: pink;
+	border-radius: 8px;
 	padding: 50px;
-	background-color: blue;
-	border-radius: 20px;
+}
+
+.grid .card.open {
+	transform: rotateX(0);
+	background: #0288cf;
+	cursor: default;
+}
+
+.grid .card.show {
+	font-size: 50px;
+}
+
+.grid .card.match {
+	background: #7db039;
+	font-size: 50px;
+	cursor: default;
 }
