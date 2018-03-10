@@ -1,0 +1,61 @@
+/*General*/
+
+* {
+	box-sizing: border-box;
+}
+
+/*Score Content*/
+
+.main-container {
+	max-width: 50%;
+	margin: auto;
+	background-color: pink;
+}
+
+h1 {
+	text-align: center;
+	background-color: pink;
+}
+
+.stars {
+	display: inline-block;
+}
+
+.stars li {
+	list-style-type: none;
+  overflow: hidden;
+	display: inline-block;
+}
+
+.fa.fa-star {
+    float: left;
+}
+
+.restart {
+	display: inline-block;
+}
+
+/*Card-Grid*/
+
+.card-grid {
+	min-height: 650px;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-around;
+	align-items: center;
+	background-color: green;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.card {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 22%;
+	height: 150px;
+	padding: 50px;
+	background-color: blue;
+	border-radius: 20px;
+}
