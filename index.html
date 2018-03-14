@@ -15,82 +15,87 @@
     <!--Memory Card icons-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <!--Font-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Limelight">
+
 </head>
 
 <body>
   <main>
     <div class="main-container">
 
-      <header>
-        <h1>Memory Game</h1>
-      </header>
+      <div class="winner-overlay"></div>
 
-      <section class="score-tracker">
-        <ul class="stars">
-          <li><i class="fa fa-star"></i></li>
-          <li><i class="fa fa-star"></i></li>
-          <li><i class="fa fa-star"></i></li>
-        </ul>
-        <span class="moves">0</span> Moves
-        <div class="reload">
-          <i class="fa fa-repeat"></i>
-        </div>
-      </section>
+        <header>
+          <h1>Memory Game</h1>
+        </header>
 
-      <section>
-        <ul class="grid">
-          <li class="card">
-            <i class="fa fa-heart"></i>
-          </li>
-          <li class="card">
-            <i class="fa fa-heart"></i>
-          </li>
-          <li class="card">
-            <i class="fa fa-key"></i>
-          </li>
-          <li class="card">
-            <i class="fa fa-key"></i>
-          </li>
-          <li class="card">
-            <i class="fa fa-leaf"></i>
-          </li>
-          <li class="card">
-            <i class="fa fa-leaf"></i>
-          </li>
-          <li class="card">
-            <i class="fa fa-lock"></i>
-          </li>
-          <li class="card">
-            <i class="fa fa-lock"></i>
-          </li>
-          <li class="card">
-            <i class="fa fa-magic"></i>
-          </li>
-          <li class="card">
-            <i class="fa fa-magic"></i>
-          </li>
-          <li class="card">
-            <i class="fa fa-music"></i>
-          </li>
-          <li class="card">
-            <i class="fa fa-music"></i>
-          </li>
-          <li class="card">
-            <i class="fa fa-paperclip"></i>
-          </li>
-          <li class="card">
-            <i class="fa fa-paperclip"></i>
-          </li>
-          <li class="card">
-            <i class="fa fa-paw"></i>
-          </li>
-          <li class="card">
-            <i class="fa fa-paw"></i>
-          </li>
-        </ul>
-      </section>
-    </div>
-  </main>
+        <section class="score-tracker">
+          <ul class="stars">
+            <li><i class="fa fa-star"></i></li>
+            <li><i id="star-middle" class="fa fa-star"></i></li>
+            <li><i id="star-last" class="fa fa-star"></i></li>
+          </ul>
+          <span class="moves">0</span> Moves
+          <div class="reload"> Reload
+            <i class="fa fa-repeat"></i>
+          </div>
+        </section>
+
+        <section>
+          <ul class="grid">
+            <li class="card">
+              <i class="fa fa-heart"></i>
+            </li>
+            <li class="card">
+              <i class="fa fa-heart"></i>
+            </li>
+            <li class="card">
+              <i class="fa fa-key"></i>
+            </li>
+            <li class="card">
+              <i class="fa fa-key"></i>
+            </li>
+            <li class="card">
+              <i class="fa fa-leaf"></i>
+            </li>
+            <li class="card">
+              <i class="fa fa-leaf"></i>
+            </li>
+            <li class="card">
+              <i class="fa fa-lock"></i>
+            </li>
+            <li class="card">
+              <i class="fa fa-lock"></i>
+            </li>
+            <li class="card">
+              <i class="fa fa-magic"></i>
+            </li>
+            <li class="card">
+              <i class="fa fa-magic"></i>
+            </li>
+            <li class="card">
+              <i class="fa fa-music"></i>
+            </li>
+            <li class="card">
+              <i class="fa fa-music"></i>
+            </li>
+            <li class="card">
+              <i class="fa fa-paperclip"></i>
+            </li>
+            <li class="card">
+              <i class="fa fa-paperclip"></i>
+            </li>
+            <li class="card">
+              <i class="fa fa-paw"></i>
+            </li>
+            <li class="card">
+              <i class="fa fa-paw"></i>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </main>
 
   <script src="js/main.js"></script>
 </body>

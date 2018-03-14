@@ -1,29 +1,29 @@
 /*Variable for calling all cards*/
-let cards = document.querySelectorAll(".card");
+let cards = document.querySelectorAll('.card');
 
 /*Array for all cards*/
 let cardsArray = [...cards];
 
 /*Variable for calling the card-grid*/
-const grid = document.querySelector(".grid");
+const grid = document.querySelector('.grid');
 
 /*Variable for calling the reload button*/
-const reloadGrid = document.querySelector(".reload");
+const reload = document.querySelector('.reload');
 
-/*Variable for calling moves variable*/
-let moves = parseInt(document.querySelector(".moves").innerHTML, 10);
+/*Variable for calling the moves counter*/
+let moves = parseInt(document.querySelector('.moves').innerHTML, 10);
 
-/*Empty array to store open cards*/
+/*Empty array to store open cards in*/
 let openCards = [];
 
 /*Shuffles and displays card-grid on site-load*/
 document.body.onload = gridSetup;
 
-/*Shuffles board when reload-button is clicked*/
-reloadGrid.addEventListener("click", gridSetup);
+/*Shuffles card-grid when reload-button is clicked*/
+reload.addEventListener('click', reloadGrid);
 
 /**
-* @description: Shuffle function from http://stackoverflow.com/a/2450976
+* @description: Shuffle cards function from http://stackoverflow.com/a/2450976
 */
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -40,74 +40,90 @@ function shuffle(array) {
 }
 
 /**
-* @description: Shuffles cards, sets up Grid, adds event listeners
+* @description: Shuffles cards, sets up Grid, adds event listeners to all cards
 */
 function gridSetup() {
   shuffledCardsArray = shuffle(cardsArray);
   for (i = 0; i < shuffledCardsArray.length; i++) {
     grid.removeChild(cardsArray[i]);
     grid.appendChild(shuffledCardsArray[i]);
-    shuffledCardsArray[i].addEventListener("click", displayCard);
+    shuffledCardsArray[i].addEventListener('click', displayCard);
   }
 }
 
 
-
-
-
 /**
-* @description: Function for displayed card
+* @description: Function for displaying card and matching it
 */
 function displayCard() {
-  if (this.classList.contains("match")) {
+  if (this.classList.contains('match')) {
     return;
   } else {
-  //added classen zur geklickten card für anzeigen
-  this.classList.add("open", "show");
-  //holt die i-classe aus dem geklickten card-element und speichert in variable iTag
-  let iTags = this.getElementsByTagName("i");
-  //holt das erste element aus der HTMLcollection iTag, speichert es in variable x
-  let x = iTags[0];
-  //speichert die classen-namen aus x als string in iTagClass
-  let iTagClass = x.className;
-  //if-abfrage start, wenn openCards-array leer, iTagClass-string rein
-  if (openCards.length === 0) {
-   openCards.push(iTagClass);
-  //wenn schon classe drin, dann neue if abfrage
-  } else {
-    moves += 1;
-    document.querySelector(".moves").innerHTML = moves;
-    //checkt ob openCards-array den gleichen i-class-namen hat
-    if (openCards.includes(iTagClass)) {
-      //falls ja sucht er sich alle elemente im grid mit dem i-class-namen
-      let jens = [...grid.getElementsByClassName(iTagClass)];
-      //for loop der durch die elemente in jens loopt und an das parent-elemnt
-      //die classe match hängt
-      for (let x of jens) {
-        x.parentElement.classList.add("match");
-        x.parentElement.classList.remove("open", "show");
-        x.parentElement.onclick = "";
-        openCards.length = 0;
-      } }
+      this.classList.add('open', 'show');
+      let iTags = this.getElementsByTagName('i');
+      let firstITag = iTags[0];
+      let iTagClass = firstITag.className;
 
-      else {
-
-setTimeout(function(){
-          let jens = [...grid.getElementsByClassName("open", "show")];
-          for (let y of jens) {
-            y.classList.remove("open", "show");
-            openCards.length = 0;
-          }}, 1000);
+//Check if a card is already open or not
+    if (openCards.length === 0) {
+      openCards.push(iTagClass);
+//Adds moves and removes stars
+    } else {
+      moves += 1;
+      document.querySelector('.moves').innerHTML = moves;
+      if (moves >= 10) {
+        starRating();
+      }
+//Check if second card matches first
+      if (openCards.includes(iTagClass)) {
+        let matchCards = [...grid.getElementsByClassName(iTagClass)];
+        for (let matchCard of matchCards) {
+          matchCard.parentElement.classList.add('match');
+          matchCard.parentElement.classList.remove('open', 'show');
+          matchCard.parentElement.onclick = '';
+          openCards.length = 0;
         }
+
+//Runs if the two open cards don't match
+      } else {
+        setTimeout(function(){
+          let noMatchCards = [...grid.getElementsByClassName('open', 'show')];
+          for (let noMatchCard of noMatchCards) {
+            noMatchCard.classList.remove('open', 'show');
+            openCards.length = 0;
+          }
+        }, 600);
       }
     }
+  }
 }
 
-
-/*
-* timer einrichten, ab 1. click, endet, wenn alle gematched
-* darauf aufbauend sterne-rating nimmt ab nach x-zahl clicks
-* final message wenn alle gematched sind mit sterne, moves + zeit
-* reload funktion anpassen (alles auf null auch gematched)
-* sonderfall: idioten-click auf offene, gematchd karte (nix darf passieren)
+/**
+* @description: Function for reloading the grid via the button
 */
+function reloadGrid() {
+  let allMatchedCards = [...grid.getElementsByClassName('match')];
+  for (let allMatchedCard of allMatchedCards) {
+    allMatchedCard.classList.remove('match');
+  }
+  let allOpenCards = [...grid.getElementsByClassName('open', 'show')];
+  for (let allOpenCard of allOpenCards) {
+    allOpenCard.classList.remove('open', 'show');
+    openCards.length = 0;
+  }
+  gridSetup();
+}
+
+/**
+* @description: Function for removing stars
+*/
+
+function starRating() {
+  if (moves >= 9 && moves <= 18) {
+    let lastStar = document.getElementById('star-last');
+    lastStar.style.fontSize = '0';
+  } else {
+    let middleStar = document.getElementById('star-middle');
+    middleStar.style.fontSize = '0';
+  }
+}
