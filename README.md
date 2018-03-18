@@ -17,4 +17,4 @@ as I'm still learning and continually looking to improve!
 
 ## License
 
-The contents of this repository are covered under the [MIT License](https://github.com/okjules/memory-game/blob/master/LICENSE).
+The contents of this repository are covered under the [MIT License](https://github.com/okjules/memory-game/blob/master/LICENSE.txt).
