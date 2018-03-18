@@ -25,7 +25,14 @@
     <div class="main-container">
 
       <div id="winner-overlay">
-        <div>This is text!</div>
+        <div id="overlay-text">
+          You beat the game, congratulations!<br><br>
+          Here are your stats:<br>
+          Remaining stars: <span class="final-stars"></span><br>
+          Moves to win: <span class="final-moves"></span><br>
+          Time to win: <span class="final-time"></span> seconds<br><br>
+          <span id="start-over">Play again? <i class="fa fa-repeat"></i></span>
+        </div>
       </div>
 
         <header>
@@ -42,6 +49,11 @@
           <div class="reload"> Reload
             <i class="fa fa-repeat"></i>
           </div>
+        </section>
+
+        <section class="timer-tracker">
+          Timer:<br>
+          <span id="timer">0</span>
         </section>
 
         <section>

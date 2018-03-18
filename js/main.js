@@ -4,13 +4,27 @@ let cards = document.querySelectorAll('.card');
 /*Array for all cards*/
 let cardsArray = [...cards];
 
-let matchCountdown = cardsArray.length
+/*Variable for countdown of matched cards*/
+let matchCountdown = cardsArray.length;
+
+/* Status of timer */
+let timerRunning = false;
+
+let timerIntervalId = 0;
+
+let initialTimer = parseInt(document.querySelector('#timer').innerHTML, 10);
+
+
+let starStatus = 3;
 
 /*Variable for calling the card-grid*/
 const grid = document.querySelector('.grid');
 
 /*Variable for calling the reload button*/
 const reload = document.querySelector('.reload');
+
+/*Variable for calling the reload button*/
+let startingOver = document.querySelector('#start-over');
 
 /*Variable for calling the moves counter*/
 let moves = parseInt(document.querySelector('.moves').innerHTML, 10);
@@ -21,8 +35,12 @@ let openCards = [];
 /*Shuffles and displays card-grid on site-load*/
 document.body.onload = gridSetup;
 
+
 /*Resets game when reload-button is clicked*/
 reload.addEventListener('click', resetGame);
+
+startingOver.addEventListener('click', jens);
+
 
 /**
 * @description: Shuffles cards, sets up Grid, adds event listeners to all cards
@@ -53,10 +71,16 @@ function shuffle(array) {
     return array;
 }
 
+
 /**
 * @description: Function for displaying card and matching it
 */
 function displayCard() {
+  if (timerRunning === false) {
+    timer();
+    timerRunning = true;
+  }
+
   if (this.classList.contains('match')) {
     return;
   } else {
@@ -134,9 +158,11 @@ function starRating() {
   if (moves >= 9 && moves <= 18) {
     let lastStar = document.getElementById('star-last');
     lastStar.style.fontSize = '0';
+    starStatus = 2;
   } else {
     let middleStar = document.getElementById('star-middle');
     middleStar.style.fontSize = '0';
+    starStatus = 1;
   }
 }
 
@@ -144,11 +170,29 @@ function starRating() {
 * @description: Function for winner overlay
 */
 function winningGame() {
+  clearInterval(timerIntervalId);
   function on() {
-      document.getElementById('winner-overlay').style.display = "block";
+      document.getElementById('winner-overlay').style.display = 'block';
   }
-  on ();
+  on();
+  document.querySelector('.final-stars').innerHTML = starStatus;
+  document.querySelector('.final-moves').innerHTML = moves;
+  document.querySelector('.final-time').innerHTML = document.querySelector('#timer').innerHTML;
 }
+
+
+
+
+
+
+function jens() {
+  function off() {
+    document.getElementById('winner-overlay').style.display = 'none';
+  }
+  off();
+  resetGame();
+}
+
 
 
 /**
@@ -158,12 +202,24 @@ function winningGame() {
 function resetGame() {
   moves = 0;
   document.querySelector('.moves').innerHTML = moves;
+  resetTimer ();
   let lastStar = document.getElementById('star-last');
   lastStar.style.fontSize = 'initial';
   let middleStar = document.getElementById('star-middle');
   middleStar.style.fontSize = 'initial';
+  matchCountdown = cardsArray.length;
   reloadGrid();
   gridSetup();
+}
+
+/**
+* @description: Function for resetting the timer
+*/
+function resetTimer() {
+  clearInterval(timerIntervalId);
+  timerRunning = false;
+  timerIntervalId = 0;
+  document.querySelector('#timer').innerHTML = initialTimer;
 }
 
 
@@ -181,3 +237,17 @@ function reloadGrid() {
     openCards.length = 0;
   }
 }
+
+/**
+* @description: Function for timing the game
+*/
+
+	function timer() {
+		let startTime = Date.now();
+		timerIntervalId = setInterval(function () {
+			let elapsedTime = Date.now() - startTime;
+			document.getElementById('timer')
+				.innerHTML = (elapsedTime / 1000)
+				.toFixed(1);
+		}, 100);
+	}
