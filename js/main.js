@@ -1,47 +1,55 @@
-/*Variable for calling all cards*/
-let cards = document.querySelectorAll('.card');
+//Inital setup
+  /* Shuffles and displays card-grid on site-load */
+  document.body.onload = gridSetup;
 
-/*Array for all cards*/
-let cardsArray = [...cards];
+//Variables concering the cards
+  /* Variable for calling the card-grid */
+  const grid = document.querySelector('.grid');
 
-/*Variable for countdown of matched cards*/
-let matchCountdown = cardsArray.length;
+  /* Variable for calling all cards */
+  let cards = document.querySelectorAll('.card');
 
-/* Status of timer */
-let timerRunning = false;
+  /* Array for all cards */
+  let cardsArray = [...cards];
 
-let timerIntervalId = 0;
+  /* Array to store open cards in */
+  let openCards = [];
 
-let initialTimer = parseInt(document.querySelector('#timer').innerHTML, 10);
+  /* Variable for tracking how many cards have been matched */
+  let matchCountdown = cardsArray.length;
 
+// Variables concerning the timer
+  /* Status of timer on start */
+  let timerRunning = false;
 
-let starStatus = 3;
+  /* Value of timer on start */
+  let timerIntervalId = 0;
 
-/*Variable for calling the card-grid*/
-const grid = document.querySelector('.grid');
+  /* Variable for calling the initial timer value */
+  let initialTimer = parseInt(document.querySelector('#timer').innerHTML, 10);
 
-/*Variable for calling the reload button*/
-const reload = document.querySelector('.reload');
+// Variables concerning the star-rating
+  /* Status of star-rating on start */
+  let starStatus = 3;
 
-/*Variable for calling the reload button*/
-let startingOver = document.querySelector('#start-over');
+// Variables concerning the moves
+  /* Variable for calling the initial moves value */
+  let moves = parseInt(document.querySelector('.moves').innerHTML, 10);
 
-/*Variable for calling the moves counter*/
-let moves = parseInt(document.querySelector('.moves').innerHTML, 10);
+// Variables concerning the two reload possibilities
+  /* Variable for calling the reload button */
+  const reload = document.querySelector('.reload');
 
-/*Empty array to store open cards in*/
-let openCards = [];
+  /* Resets game when reload-button is clicked */
+  reload.addEventListener('click', resetGame);
 
-/*Shuffles and displays card-grid on site-load*/
-document.body.onload = gridSetup;
+  /* Variable for calling the play again-button */
+  const startingOver = document.querySelector('#start-over');
 
+  /* Resets game when play again-button is clicked */
+  startingOver.addEventListener('click', playAgain);
 
-/*Resets game when reload-button is clicked*/
-reload.addEventListener('click', resetGame);
-
-startingOver.addEventListener('click', jens);
-
-
+// Functions
 /**
 * @description: Shuffles cards, sets up Grid, adds event listeners to all cards
 */
@@ -55,32 +63,30 @@ function gridSetup() {
 }
 
 /**
-* @description: Shuffle cards function from http://stackoverflow.com/a/2450976
+* @description: Card shuffle function from http://stackoverflow.com/a/2450976
 */
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
-
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
+  var currentIndex = array.length, temporaryValue, randomIndex;
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
     }
-
-    return array;
+  return array;
 }
 
-
 /**
-* @description: Function for displaying card and matching it
+* @description: Function for displaying a card and matching it
 */
 function displayCard() {
+//Starts timer on first click
   if (timerRunning === false) {
     timer();
     timerRunning = true;
   }
-
+//Turn around the clicked card, does nothing if card is already open and matched
   if (this.classList.contains('match')) {
     return;
   } else {
@@ -98,7 +104,7 @@ function displayCard() {
         if (moves >= 10) {
           starRating();
         }
-//Check if second card matches first
+//Checks if second, opened card matches the first
         if (openCards.includes(iTagClass)) {
           cardsMatch(iTagClass);
             if (matchCountdown === 0) {
@@ -141,19 +147,28 @@ function cardsDontMatch() {
 }
 
 /**
+* @description: Function for timing the game and displaying timer, adapted from here
+* https://wiki.selfhtml.org/wiki/JavaScript/Objekte/Date/now
+*/
+function timer() {
+  let startTime = Date.now();
+	timerIntervalId = setInterval(function () {
+    let elapsedTime = Date.now() - startTime;
+		document.getElementById('timer').innerHTML = (elapsedTime / 1000).toFixed(1);
+		}, 100);
+	}
+
+/**
 * @description: Function for increasing moves
 */
-
 function increaseMoves() {
   moves += 1;
   document.querySelector('.moves').innerHTML = moves;
 }
 
-
 /**
 * @description: Function for removing stars
 */
-
 function starRating() {
   if (moves >= 9 && moves <= 15) {
     let lastStar = document.getElementById('star-last');
@@ -167,7 +182,7 @@ function starRating() {
 }
 
 /**
-* @description: Function for winner overlay
+* @description: Function for winner modal, if all cards match
 */
 function winningGame() {
   clearInterval(timerIntervalId);
@@ -180,12 +195,10 @@ function winningGame() {
   document.querySelector('.final-time').innerHTML = document.querySelector('#timer').innerHTML;
 }
 
-
-
-
-
-
-function jens() {
+/**
+* @description: Function to ran, if play again-button on winner modal is clicked
+*/
+function playAgain() {
   function off() {
     document.getElementById('winner-overlay').style.display = 'none';
   }
@@ -193,21 +206,18 @@ function jens() {
   resetGame();
 }
 
-
-
 /**
 * @description: Function for resetting the whole Game
 */
-
 function resetGame() {
   moves = 0;
   document.querySelector('.moves').innerHTML = moves;
-  resetTimer ();
   let lastStar = document.getElementById('star-last');
   lastStar.style.fontSize = 'initial';
   let middleStar = document.getElementById('star-middle');
   middleStar.style.fontSize = 'initial';
   matchCountdown = cardsArray.length;
+  resetTimer ();
   reloadGrid();
   gridSetup();
 }
@@ -222,9 +232,8 @@ function resetTimer() {
   document.querySelector('#timer').innerHTML = initialTimer;
 }
 
-
 /**
-* @description: Function for resetting the card-grid
+* @description: Function for resetting the cards
 */
 function reloadGrid() {
   let allMatchedCards = [...grid.getElementsByClassName('match')];
@@ -237,17 +246,3 @@ function reloadGrid() {
     openCards.length = 0;
   }
 }
-
-/**
-* @description: Function for timing the game
-*/
-
-	function timer() {
-		let startTime = Date.now();
-		timerIntervalId = setInterval(function () {
-			let elapsedTime = Date.now() - startTime;
-			document.getElementById('timer')
-				.innerHTML = (elapsedTime / 1000)
-				.toFixed(1);
-		}, 100);
-	}
