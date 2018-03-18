@@ -1,5 +1,4 @@
 /* General */
-
 * {
 	box-sizing: border-box;
 }
@@ -15,21 +14,19 @@ body {
 }
 
 /* Main-Container */
-
 .main-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 	max-width: 100%;
 	margin: auto;
 	background: #d3d3d3;
 	border-radius: 10px;
 	box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
 }
 
 /* Game Tracking Content */
-
 .score-tracker {
 	margin-bottom: -20px;
 }
@@ -40,9 +37,9 @@ body {
 }
 
 .stars li {
+	display: inline-block;
 	list-style-type: none;
   overflow: hidden;
-	display: inline-block;
 }
 
 .fa.fa-star {
@@ -52,8 +49,7 @@ body {
 .reload {
 	display: inline-block;
 	cursor: pointer;
-	margin-left: 20px;
-	margin-right: 20px;
+	margin: 0 20px;
 }
 
 .timer-tracker {
@@ -62,7 +58,6 @@ body {
 }
 
 /* Card-Grid */
-
 .grid {
 	display: flex;
 	flex-wrap: wrap;
@@ -90,9 +85,8 @@ body {
 }
 
 .grid .card.open {
-	transform: rotateX(0);
-	background: #83a9cc;
 	cursor: default;
+	background: #83a9cc;
 }
 
 .grid .card.show {
@@ -100,13 +94,12 @@ body {
 }
 
 .grid .card.match {
-	background: #43a6a6;
 	cursor: default;
+	background: #43a6a6;
 	font-size: 30px;
 }
 
 /* Winner-Overlay */
-
 #winner-overlay {
 	position: fixed;
   display: none;
@@ -118,7 +111,7 @@ body {
   bottom: 0;
 	color: #fff;
 	text-align: center;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0,0,0,0.8);
 }
 
 #overlay-text {
@@ -165,6 +158,7 @@ body {
 		width: 500px;
 		margin-top: 50px;
 	}
+	
 	.grid .card.show {
 		font-size: 50px;
 	}
