@@ -87,7 +87,7 @@ function displayCard() {
     timerRunning = true;
   }
 //Turn around the clicked card, does nothing if card is already open and matched
-  if (this.classList.contains('match')) {
+  if (this.classList.contains('match')||this.classList.contains('open')) {
     return;
   } else {
       this.classList.add('open', 'show');
