@@ -155,7 +155,7 @@ function increaseMoves() {
 */
 
 function starRating() {
-  if (moves >= 9 && moves <= 18) {
+  if (moves >= 9 && moves <= 15) {
     let lastStar = document.getElementById('star-last');
     lastStar.style.fontSize = '0';
     starStatus = 2;
